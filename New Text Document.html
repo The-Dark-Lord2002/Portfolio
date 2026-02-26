@@ -1,0 +1,692 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mohammad Mahdi Arab — Software Engineer</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0a0a0f;
+        --surface: #12121a;
+        --border: #1e1e2e;
+        --accent: #6ee7b7;
+        --accent2: #38bdf8;
+        --accent3: #a78bfa;
+        --text: #e2e8f0;
+        --muted: #64748b;
+        --card: #13131e;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        font-weight: 300;
+        line-height: 1.7;
+        overflow-x: hidden;
+      }
+
+      /* Noise texture overlay */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.3;
+      }
+
+      /* Gradient mesh background */
+      .bg-mesh {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        background:
+          radial-gradient(
+            ellipse 60% 50% at 80% 20%,
+            rgba(110, 231, 183, 0.07) 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse 50% 60% at 10% 80%,
+            rgba(56, 189, 248, 0.06) 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse 40% 40% at 60% 70%,
+            rgba(167, 139, 250, 0.05) 0%,
+            transparent 60%
+          );
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Hero */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 6rem 0 4rem;
+      }
+
+      .hero-tag {
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.75rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 2rem;
+        opacity: 0;
+        animation: fadeUp 0.8s ease forwards 0.2s;
+      }
+
+      .hero h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(3rem, 8vw, 6rem);
+        font-weight: 800;
+        line-height: 1;
+        letter-spacing: -0.03em;
+        margin-bottom: 0.5rem;
+        opacity: 0;
+        animation: fadeUp 0.8s ease forwards 0.4s;
+      }
+
+      .hero h1 .name-accent {
+        background: linear-gradient(
+          135deg,
+          var(--accent) 0%,
+          var(--accent2) 50%,
+          var(--accent3) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .hero-role {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.2rem, 3vw, 1.8rem);
+        font-weight: 600;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        opacity: 0;
+        animation: fadeUp 0.8s ease forwards 0.5s;
+      }
+
+      .hero-bio {
+        max-width: 560px;
+        font-size: 1.05rem;
+        color: #94a3b8;
+        line-height: 1.8;
+        margin-bottom: 3rem;
+        opacity: 0;
+        animation: fadeUp 0.8s ease forwards 0.6s;
+      }
+
+      .hero-links {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        opacity: 0;
+        animation: fadeUp 0.8s ease forwards 0.7s;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.75rem;
+        border-radius: 100px;
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        letter-spacing: 0.02em;
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: #0a0a0f;
+      }
+
+      .btn-primary:hover {
+        background: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(110, 231, 183, 0.2);
+      }
+
+      .btn-ghost {
+        border: 1px solid var(--border);
+        color: var(--text);
+        background: transparent;
+      }
+
+      .btn-ghost:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+        transform: translateY(-2px);
+      }
+
+      /* Divider */
+      .section-divider {
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--border),
+          transparent
+        );
+        margin: 5rem 0;
+      }
+
+      /* Section Header */
+      .section-label {
+        font-size: 0.7rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .section-label::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+        max-width: 80px;
+      }
+
+      .section-title {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 700;
+        margin-bottom: 3rem;
+        line-height: 1.1;
+      }
+
+      /* Skills */
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        gap: 0.75rem;
+        margin-bottom: 3rem;
+      }
+
+      .skill-chip {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 0.75rem 1rem;
+        font-size: 0.85rem;
+        color: #94a3b8;
+        text-align: center;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .skill-chip::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(110, 231, 183, 0.05),
+          transparent
+        );
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      .skill-chip:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+        transform: translateY(-3px);
+      }
+
+      .skill-chip:hover::before {
+        opacity: 1;
+      }
+
+      /* Experience */
+      .exp-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .exp-item {
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        gap: 2rem;
+        padding: 2.5rem 0;
+        border-bottom: 1px solid var(--border);
+        position: relative;
+      }
+
+      .exp-item:first-child {
+        border-top: 1px solid var(--border);
+      }
+
+      .exp-date {
+        font-size: 0.8rem;
+        color: var(--muted);
+        letter-spacing: 0.05em;
+        padding-top: 0.25rem;
+      }
+
+      .exp-role {
+        font-family: "Syne", sans-serif;
+        font-size: 1.15rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+        color: var(--text);
+      }
+
+      .exp-company {
+        font-size: 0.9rem;
+        color: var(--accent);
+        margin-bottom: 0.75rem;
+        font-weight: 500;
+      }
+
+      .exp-desc {
+        font-size: 0.9rem;
+        color: #94a3b8;
+        line-height: 1.7;
+      }
+
+      .exp-badge {
+        display: inline-block;
+        background: rgba(110, 231, 183, 0.1);
+        border: 1px solid rgba(110, 231, 183, 0.2);
+        color: var(--accent);
+        font-size: 0.7rem;
+        padding: 0.2rem 0.6rem;
+        border-radius: 100px;
+        letter-spacing: 0.05em;
+        margin-left: 0.5rem;
+        vertical-align: middle;
+      }
+
+      /* Education */
+      .edu-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+
+      .edu-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2rem;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .edu-card::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--accent), var(--accent2));
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      .edu-card:hover {
+        border-color: rgba(110, 231, 183, 0.3);
+        transform: translateY(-4px);
+      }
+      .edu-card:hover::after {
+        opacity: 1;
+      }
+
+      .edu-degree {
+        font-size: 0.75rem;
+        color: var(--accent2);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+      }
+
+      .edu-school {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+      }
+
+      .edu-field {
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+
+      .edu-year {
+        font-size: 0.8rem;
+        color: var(--muted);
+        margin-top: 1rem;
+      }
+
+      /* Contact */
+      .contact-section {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 4rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 6rem;
+      }
+
+      .contact-section::before {
+        content: "";
+        position: absolute;
+        inset: -1px;
+        border-radius: 24px;
+        background: linear-gradient(
+          135deg,
+          rgba(110, 231, 183, 0.2),
+          transparent,
+          rgba(56, 189, 248, 0.2)
+        );
+        z-index: -1;
+      }
+
+      .contact-section h2 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 800;
+        margin-bottom: 1rem;
+      }
+
+      .contact-section p {
+        color: #94a3b8;
+        max-width: 480px;
+        margin: 0 auto 2.5rem;
+      }
+
+      .contact-links {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      /* Footer */
+      footer {
+        text-align: center;
+        padding: 2rem 0;
+        color: var(--muted);
+        font-size: 0.8rem;
+        border-top: 1px solid var(--border);
+      }
+
+      /* Scroll reveal */
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Responsive */
+      @media (max-width: 640px) {
+        .exp-item {
+          grid-template-columns: 1fr;
+          gap: 0.5rem;
+        }
+        .edu-grid {
+          grid-template-columns: 1fr;
+        }
+        .contact-section {
+          padding: 2.5rem 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-mesh"></div>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-tag">Available for opportunities</div>
+        <h1>
+          Mohammad Mahdi<br />
+          <span class="name-accent">Arab</span>
+        </h1>
+        <div class="hero-role">Software Engineer & Front-End Developer</div>
+        <p class="hero-bio">
+          I build high-quality digital products with a focus on scalable
+          architecture and exceptional user experiences. Passionate about React,
+          TypeScript, and turning complex problems into elegant solutions. My
+          goal: build a tech startup that makes a real impact.
+        </p>
+        <div class="hero-links">
+          <a
+            href="https://www.linkedin.com/in/mohammad-mahdi-arab2002/"
+            class="btn btn-primary"
+            target="_blank"
+          >
+            LinkedIn Profile
+          </a>
+          <a
+            href="https://github.com/The-Dark-Lord2002"
+            class="btn btn-ghost"
+            target="_blank"
+          >
+            GitHub
+          </a>
+          <a href="mailto:math.mohammad.arab@gmail.com" class="btn btn-ghost">
+            Email Me
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="section-divider"></div>
+
+      <!-- SKILLS -->
+      <section class="reveal">
+        <div class="section-label">Expertise</div>
+        <h2 class="section-title">Skills & Technologies</h2>
+        <div class="skills-grid">
+          <div class="skill-chip">JavaScript</div>
+          <div class="skill-chip">TypeScript</div>
+          <div class="skill-chip">React</div>
+          <div class="skill-chip">HTML5</div>
+          <div class="skill-chip">CSS / SCSS</div>
+          <div class="skill-chip">Next.js</div>
+          <div class="skill-chip">Git</div>
+          <div class="skill-chip">REST APIs</div>
+          <div class="skill-chip">Figma</div>
+          <div class="skill-chip">Agile / Scrum</div>
+          <div class="skill-chip">UI Architecture</div>
+          <div class="skill-chip">Performance</div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- EXPERIENCE -->
+      <section class="reveal">
+        <div class="section-label">Career</div>
+        <h2 class="section-title">Experience</h2>
+        <div class="exp-list">
+          <div class="exp-item">
+            <div class="exp-date">Oct 2025 — Present</div>
+            <div>
+              <div class="exp-role">
+                Frontend Developer <span class="exp-badge">Current</span>
+              </div>
+              <div class="exp-company">
+                Rayasadr AI & Data Processing Co. · Damghan, Iran
+              </div>
+              <div class="exp-desc">
+                Building and maintaining frontend systems for an AI-focused
+                company, working with modern web technologies to deliver
+                data-rich, performant interfaces.
+              </div>
+            </div>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-date">Jan 2024 — Jul 2024</div>
+            <div>
+              <div class="exp-role">Front-End Team Lead</div>
+              <div class="exp-company">Hamsaye · Tehran, Iran</div>
+              <div class="exp-desc">
+                Led a front-end team in building and shipping product features.
+                Responsible for code reviews, technical decisions, team
+                coordination, and setting development standards.
+              </div>
+            </div>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-date">Sep 2023 — Jan 2024</div>
+            <div>
+              <div class="exp-role">Teaching Assistant</div>
+              <div class="exp-company">Damghan University</div>
+              <div class="exp-desc">
+                Supported students with coursework in computer engineering, held
+                review sessions, and provided mentorship on technical projects.
+              </div>
+            </div>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-date">Jun 2022 — May 2023</div>
+            <div>
+              <div class="exp-role">Frontend Developer</div>
+              <div class="exp-company">Sepehr Academy · Sari, Iran</div>
+              <div class="exp-desc">
+                Developed responsive and interactive web applications,
+                translating design mockups into production-ready code.
+                Collaborated with design and backend teams.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- EDUCATION -->
+      <section class="reveal">
+        <div class="section-label">Academic Background</div>
+        <h2 class="section-title">Education</h2>
+        <div class="edu-grid">
+          <div class="edu-card">
+            <div class="edu-degree">Master's Degree</div>
+            <div class="edu-school">Shahrood University of Technology</div>
+            <div class="edu-field">Computer Software Engineering</div>
+            <div class="edu-year">2025</div>
+          </div>
+          <div class="edu-card">
+            <div class="edu-degree">Bachelor of Engineering</div>
+            <div class="edu-school">Damghan University</div>
+            <div class="edu-field">Computer Engineering</div>
+            <div class="edu-year">2020 – 2025</div>
+          </div>
+          <div class="edu-card">
+            <div class="edu-degree">Bachelor of Engineering</div>
+            <div class="edu-school">University of Mazandaran</div>
+            <div class="edu-field">Computer Engineering</div>
+            <div class="edu-year">2022</div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- CONTACT -->
+      <section class="contact-section reveal">
+        <h2>Let's Build Something Together</h2>
+        <p>
+          I'm open to exciting roles, collaborations, and startup opportunities.
+          Don't hesitate to reach out.
+        </p>
+        <div class="contact-links">
+          <a href="mailto:math.mohammad.arab@gmail.com" class="btn btn-primary"
+            >math.mohammad.arab@gmail.com</a
+          >
+          <a
+            href="https://github.com/The-Dark-Lord2002"
+            class="btn btn-ghost"
+            target="_blank"
+            >GitHub</a
+          >
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      <div class="container">
+        © 2025 Mohammad Mahdi Arab · Software Engineer
+      </div>
+    </footer>
+
+    <script>
+      // Scroll reveal
+      const reveals = document.querySelectorAll(".reveal");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
+      reveals.forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>
