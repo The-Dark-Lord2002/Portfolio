@@ -16,6 +16,10 @@
       content="Front-end developer (React, TypeScript, Next.js) and M.Sc. student in Software Engineering."
     />
     <meta property="og:url" content="https://the-dark-lord2002.github.io/Portfolio/" />
+    <meta property="og:image" content="https://the-dark-lord2002.github.io/Portfolio/assets/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#0a0a0f" />
     <script>
       // Set language, direction and theme before first paint.
@@ -51,7 +55,7 @@
       })();
     </script>
     <link
-      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Vazirmatn:wght@300;400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500;600&family=Vazirmatn:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -59,7 +63,10 @@
         color-scheme: dark;
         --bg: #0a0a0f;
         --surface: #12121a;
+        --card: #101018;
+        --card-hover: #13131d;
         --border: #1e1e2e;
+        --border-strong: #2a2a3d;
         --accent: #6ee7b7;
         --accent-rgb: 110, 231, 183;
         --accent2: #38bdf8;
@@ -69,18 +76,23 @@
         --text: #e2e8f0;
         --text-2: #94a3b8;
         --muted: #7b8aa0;
-        --card: #13131e;
         --on-accent: #0a0a0f;
+        --shadow: 0 1px 0 rgba(255, 255, 255, 0.03) inset;
         --font-display: "Syne", sans-serif;
         --font-body: "DM Sans", sans-serif;
+        --radius: 22px;
+        --gap: 14px;
       }
 
       @media (prefers-color-scheme: light) {
         :root:not([data-theme="dark"]) {
           color-scheme: light;
-          --bg: #f7f8fb;
+          --bg: #f4f5f9;
           --surface: #ffffff;
-          --border: #e2e8f0;
+          --card: #ffffff;
+          --card-hover: #ffffff;
+          --border: #e3e6ee;
+          --border-strong: #d3d8e3;
           --accent: #047857;
           --accent-rgb: 4, 120, 87;
           --accent2: #0369a1;
@@ -90,16 +102,19 @@
           --text: #0f172a;
           --text-2: #475569;
           --muted: #5f6b7d;
-          --card: #ffffff;
           --on-accent: #ffffff;
+          --shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 24px rgba(15, 23, 42, 0.04);
         }
       }
 
       :root[data-theme="light"] {
         color-scheme: light;
-        --bg: #f7f8fb;
+        --bg: #f4f5f9;
         --surface: #ffffff;
-        --border: #e2e8f0;
+        --card: #ffffff;
+        --card-hover: #ffffff;
+        --border: #e3e6ee;
+        --border-strong: #d3d8e3;
         --accent: #047857;
         --accent-rgb: 4, 120, 87;
         --accent2: #0369a1;
@@ -109,8 +124,8 @@
         --text: #0f172a;
         --text-2: #475569;
         --muted: #5f6b7d;
-        --card: #ffffff;
         --on-accent: #ffffff;
+        --shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 24px rgba(15, 23, 42, 0.04);
       }
 
       /* Persian & Arabic */
@@ -125,6 +140,10 @@
         letter-spacing: 0 !important;
       }
 
+      html[dir="rtl"] .flip {
+        transform: scaleX(-1);
+      }
+
       * {
         margin: 0;
         padding: 0;
@@ -135,8 +154,8 @@
         background: var(--bg);
         color: var(--text);
         font-family: var(--font-body);
-        font-weight: 300;
-        line-height: 1.7;
+        font-weight: 400;
+        line-height: 1.6;
         overflow-x: hidden;
         transition:
           background-color 0.3s ease,
@@ -144,66 +163,70 @@
       }
 
       html[dir="rtl"] body {
-        font-weight: 400;
-        line-height: 1.9;
+        line-height: 1.85;
       }
 
-      /* Noise texture overlay */
-      body::before {
-        content: "";
-        position: fixed;
-        inset: 0;
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-        pointer-events: none;
-        z-index: 0;
-        opacity: 0.3;
-      }
-
-      /* Gradient mesh background */
       .bg-mesh {
         position: fixed;
         inset: 0;
         z-index: -1;
         background:
-          radial-gradient(
-            ellipse 60% 50% at 80% 20%,
-            rgba(var(--accent-rgb), 0.07) 0%,
-            transparent 60%
-          ),
-          radial-gradient(
-            ellipse 50% 60% at 10% 80%,
-            rgba(var(--accent2-rgb), 0.06) 0%,
-            transparent 60%
-          ),
-          radial-gradient(
-            ellipse 40% 40% at 60% 70%,
-            rgba(var(--accent3-rgb), 0.05) 0%,
-            transparent 60%
-          );
+          radial-gradient(ellipse 50% 40% at 85% 0%, rgba(var(--accent-rgb), 0.08), transparent 70%),
+          radial-gradient(ellipse 50% 50% at 0% 100%, rgba(var(--accent2-rgb), 0.07), transparent 70%),
+          radial-gradient(ellipse 40% 40% at 50% 60%, rgba(var(--accent3-rgb), 0.04), transparent 70%);
       }
 
-      .container {
-        max-width: 900px;
+      .i {
+        width: 16px;
+        height: 16px;
+        flex: none;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .page {
+        max-width: 1120px;
         margin: 0 auto;
-        padding: 0 2rem;
-        position: relative;
-        z-index: 1;
+        padding: 1.5rem 2rem 2rem;
       }
 
-      /* Toolbar: language + theme */
+      /* Header */
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: var(--gap);
+      }
+
+      .monogram {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.75rem;
+        height: 2.75rem;
+        border-radius: 14px;
+        background: linear-gradient(135deg, var(--accent), var(--accent2) 55%, var(--accent3));
+        color: var(--on-accent);
+        font-family: "Syne", sans-serif;
+        font-weight: 800;
+        font-size: 0.78rem;
+        letter-spacing: -0.02em;
+        text-decoration: none;
+      }
+
       .toolbar {
         display: none;
-        position: fixed;
-        top: 1rem;
-        inset-inline-end: 1rem;
-        z-index: 10;
         align-items: center;
         gap: 0.25rem;
         padding: 0.25rem;
-        background: var(--surface);
+        background: var(--card);
         border: 1px solid var(--border);
         border-radius: 100px;
-        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+        box-shadow: var(--shadow);
       }
 
       .js .toolbar {
@@ -252,13 +275,6 @@
         color: var(--on-accent);
       }
 
-      .lang-btn:focus-visible,
-      .theme-btn:focus-visible,
-      .btn:focus-visible {
-        outline: 2px solid var(--accent2);
-        outline-offset: 2px;
-      }
-
       .theme-btn {
         padding: 0;
         border-inline-start: 1px solid var(--border);
@@ -269,436 +285,575 @@
         border-radius: 100px 0 0 100px;
       }
 
+      .theme-btn .i {
+        width: 18px;
+        height: 18px;
+      }
+
       :root[data-theme="dark"] .icon-moon,
       :root[data-theme="light"] .icon-sun {
         display: none;
       }
 
-      /* Hero */
-      .hero {
-        min-height: 100vh;
+      :focus-visible {
+        outline: 2px solid var(--accent2);
+        outline-offset: 2px;
+      }
+
+      /* Bento grid */
+      .bento {
+        display: grid;
+        gap: var(--gap);
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-areas:
+          "intro intro loc   since"
+          "intro intro now   now"
+          "exp   exp   stack stack"
+          "exp   exp   edu   edu"
+          "contact contact contact contact";
+      }
+
+      .card {
+        position: relative;
+        overflow: hidden;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1.75rem;
+        box-shadow: var(--shadow);
+        transition:
+          border-color 0.3s ease,
+          background-color 0.3s ease,
+          transform 0.3s ease;
+      }
+
+      /* Cursor spotlight */
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          420px circle at var(--mx, 50%) var(--my, -30%),
+          rgba(var(--accent-rgb), 0.08),
+          transparent 45%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+      }
+
+      .card:hover {
+        border-color: var(--border-strong);
+        background: var(--card-hover);
+      }
+
+      .card:hover::before {
+        opacity: 1;
+      }
+
+      .card > * {
+        position: relative;
+      }
+
+      .card-label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 1.25rem;
+      }
+
+      html[dir="rtl"] .card-label {
+        font-size: 0.85rem;
+      }
+
+      .card-label .i {
+        width: 14px;
+        height: 14px;
+        color: var(--accent);
+      }
+
+      /* Intro */
+      .intro {
+        grid-area: intro;
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        padding: 6rem 0 4rem;
+        justify-content: space-between;
+        gap: 2rem;
+        padding: 2.25rem;
+        container-type: inline-size;
+        background:
+          radial-gradient(ellipse 80% 60% at 100% 0%, rgba(var(--accent-rgb), 0.09), transparent 70%),
+          var(--card);
       }
 
-      /* margin: auto on a flex item disables stretch; keep it full width */
-      .hero .container {
-        width: 100%;
+      html[dir="rtl"] .intro {
+        background:
+          radial-gradient(ellipse 80% 60% at 0% 0%, rgba(var(--accent-rgb), 0.09), transparent 70%),
+          var(--card);
       }
 
-      .hero-tag {
-        font-family: var(--font-body);
-        font-size: 0.75rem;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
+      .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        align-self: flex-start;
+        padding: 0.35rem 0.85rem;
+        border: 1px solid rgba(var(--accent-rgb), 0.25);
+        background: rgba(var(--accent-rgb), 0.08);
         color: var(--accent);
-        margin-bottom: 2rem;
-        opacity: 0;
-        animation: fadeUp 0.8s ease forwards 0.2s;
+        border-radius: 100px;
+        font-size: 0.78rem;
+        font-weight: 500;
       }
 
-      .hero h1 {
+      .pulse {
+        position: relative;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent);
+        flex: none;
+      }
+
+      .pulse::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: var(--accent);
+        animation: pulse 2s ease-out infinite;
+      }
+
+      @keyframes pulse {
+        from {
+          transform: scale(1);
+          opacity: 0.6;
+        }
+        to {
+          transform: scale(2.8);
+          opacity: 0;
+        }
+      }
+
+      .intro h1 {
         font-family: var(--font-display);
-        font-size: clamp(1.75rem, 9vw, 5.25rem);
+        /* "Mohammad" in Syne is ~9.9em wide; 9cqi keeps it inside the card */
+        font-size: clamp(1.5rem, 9cqi, 3.25rem);
         font-weight: 800;
-        line-height: 1;
+        line-height: 1.02;
         letter-spacing: -0.03em;
-        margin-bottom: 0.5rem;
-        opacity: 0;
-        animation: fadeUp 0.8s ease forwards 0.4s;
+        margin: 1.5rem 0 0.75rem;
       }
 
-      html[dir="rtl"] .hero h1 {
-        line-height: 1.3;
+      html[dir="rtl"] .intro h1 {
+        line-height: 1.35;
       }
 
-      .hero h1 .name-accent {
-        background: linear-gradient(
-          135deg,
-          var(--accent) 0%,
-          var(--accent2) 50%,
-          var(--accent3) 100%
-        );
+      .grad {
+        background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 50%, var(--accent3) 100%);
         -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
         background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
 
-      .hero-role {
+      .intro-role {
         font-family: var(--font-display);
-        font-size: clamp(1.2rem, 3vw, 1.8rem);
+        font-size: 1.05rem;
         font-weight: 600;
         color: var(--muted);
-        margin-bottom: 2.5rem;
-        opacity: 0;
-        animation: fadeUp 0.8s ease forwards 0.5s;
       }
 
-      .hero-bio {
-        max-width: 560px;
-        font-size: 1.05rem;
+      .intro-bio {
+        font-size: 0.98rem;
         color: var(--text-2);
-        line-height: 1.8;
-        margin-bottom: 3rem;
-        opacity: 0;
-        animation: fadeUp 0.8s ease forwards 0.6s;
+        max-width: 34rem;
+        font-weight: 300;
       }
 
-      html[dir="rtl"] .hero-bio {
+      html[dir="rtl"] .intro-bio {
+        font-weight: 400;
         line-height: 2;
       }
 
-      .hero-links {
+      .links {
         display: flex;
-        gap: 1rem;
         flex-wrap: wrap;
-        opacity: 0;
-        animation: fadeUp 0.8s ease forwards 0.7s;
+        gap: 0.6rem;
+        margin-top: 1.5rem;
       }
 
       .btn {
         display: inline-flex;
         align-items: center;
-        gap: 0.5rem;
-        padding: 0.75rem 1.75rem;
+        gap: 0.45rem;
+        padding: 0.65rem 1.25rem;
         border-radius: 100px;
         font-family: var(--font-body);
-        font-size: 0.9rem;
+        font-size: 0.88rem;
         font-weight: 500;
         text-decoration: none;
-        transition: all 0.3s ease;
-        letter-spacing: 0.02em;
+        border: 1px solid var(--border-strong);
+        color: var(--text);
+        background: transparent;
+        transition:
+          transform 0.25s ease,
+          border-color 0.25s ease,
+          color 0.25s ease,
+          background-color 0.25s ease;
+      }
+
+      .btn .i {
+        width: 14px;
+        height: 14px;
+      }
+
+      .btn:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+        transform: translateY(-2px);
       }
 
       .btn-primary {
         background: var(--accent);
+        border-color: var(--accent);
         color: var(--on-accent);
       }
 
       .btn-primary:hover {
         background: var(--text);
+        border-color: var(--text);
         color: var(--bg);
-        transform: translateY(-2px);
-        box-shadow: 0 10px 30px rgba(var(--accent-rgb), 0.2);
       }
 
-      .btn-ghost {
-        border: 1px solid var(--border);
-        color: var(--text);
-        background: transparent;
+      /* Location / time */
+      .loc {
+        grid-area: loc;
       }
 
-      .btn-ghost:hover {
-        border-color: var(--accent);
-        color: var(--accent);
-        transform: translateY(-2px);
+      .since {
+        grid-area: since;
       }
 
-      /* Divider */
-      .section-divider {
-        height: 1px;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          var(--border),
-          transparent
-        );
-        margin: 5rem 0;
+      .big {
+        font-family: "Syne", sans-serif;
+        font-size: 2.4rem;
+        font-weight: 800;
+        line-height: 1;
+        letter-spacing: -0.02em;
+        font-variant-numeric: tabular-nums;
       }
 
-      /* Section Header */
-      .section-label {
-        font-size: 0.7rem;
-        letter-spacing: 0.25em;
-        text-transform: uppercase;
-        color: var(--accent);
-        margin-bottom: 1rem;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
+      html[dir="rtl"] .big {
+        font-family: "Vazirmatn", sans-serif;
       }
 
-      html[dir="rtl"] .section-label {
-        font-size: 0.85rem;
-      }
-
-      .section-label::after {
-        content: "";
-        flex: 1;
-        height: 1px;
-        background: var(--border);
-        max-width: 80px;
-      }
-
-      .section-title {
-        font-family: var(--font-display);
-        font-size: clamp(2rem, 4vw, 3rem);
-        font-weight: 700;
-        margin-bottom: 3rem;
-        line-height: 1.1;
-      }
-
-      html[dir="rtl"] .section-title {
-        line-height: 1.4;
-      }
-
-      /* Skills */
-      .skills-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-        gap: 0.75rem;
-        margin-bottom: 3rem;
-      }
-
-      .skill-chip {
-        background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        padding: 0.75rem 1rem;
-        font-size: 0.85rem;
+      .sub {
+        margin-top: 0.6rem;
+        font-size: 0.88rem;
         color: var(--text-2);
-        text-align: center;
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
       }
 
-      .skill-chip::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-          135deg,
-          rgba(var(--accent-rgb), 0.05),
-          transparent
-        );
-        opacity: 0;
-        transition: opacity 0.3s;
-      }
-
-      .skill-chip:hover {
-        border-color: var(--accent);
-        color: var(--accent);
-        transform: translateY(-3px);
-      }
-
-      .skill-chip:hover::before {
-        opacity: 1;
-      }
-
-      /* Experience */
-      .exp-list {
-        display: flex;
-        flex-direction: column;
-        gap: 0;
-      }
-
-      .exp-item {
-        display: grid;
-        grid-template-columns: 1fr 3fr;
-        gap: 2rem;
-        padding: 2.5rem 0;
-        border-bottom: 1px solid var(--border);
-        position: relative;
-      }
-
-      .exp-item:first-child {
-        border-top: 1px solid var(--border);
-      }
-
-      .exp-date {
-        font-size: 0.8rem;
-        color: var(--muted);
-        letter-spacing: 0.05em;
-        padding-top: 0.25rem;
-      }
-
-      .exp-role {
+      .loc .place {
         font-family: var(--font-display);
         font-size: 1.15rem;
         font-weight: 700;
-        margin-bottom: 0.25rem;
-        color: var(--text);
       }
 
-      .exp-company {
-        font-size: 0.9rem;
-        color: var(--accent);
-        margin-bottom: 0.75rem;
-        font-weight: 500;
-      }
-
-      .exp-desc {
-        font-size: 0.9rem;
-        color: var(--text-2);
-        line-height: 1.7;
-      }
-
-      html[dir="rtl"] .exp-desc {
-        line-height: 2;
-      }
-
-      .exp-badge {
-        display: inline-block;
-        background: rgba(var(--accent-rgb), 0.1);
-        border: 1px solid rgba(var(--accent-rgb), 0.2);
-        color: var(--accent);
-        font-family: var(--font-body);
-        font-size: 0.7rem;
-        font-weight: 500;
-        padding: 0.2rem 0.6rem;
-        border-radius: 100px;
-        letter-spacing: 0.05em;
-        margin-inline-start: 0.5rem;
-        vertical-align: middle;
-      }
-
-      /* Education */
-      .edu-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1.5rem;
-      }
-
-      .edu-card {
-        background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: 16px;
-        padding: 2rem;
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .edu-card::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 2px;
-        background: linear-gradient(90deg, var(--accent), var(--accent2));
-        opacity: 0;
-        transition: opacity 0.3s;
-      }
-
-      .edu-card:hover {
-        border-color: rgba(var(--accent-rgb), 0.3);
-        transform: translateY(-4px);
-      }
-      .edu-card:hover::after {
-        opacity: 1;
-      }
-
-      .edu-degree {
-        font-size: 0.75rem;
-        color: var(--accent2);
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        margin-bottom: 0.5rem;
-      }
-
-      html[dir="rtl"] .edu-degree {
+      .loc .clock {
+        margin-top: 1.1rem;
+        display: flex;
+        align-items: baseline;
+        gap: 0.5rem;
+        color: var(--muted);
         font-size: 0.85rem;
       }
 
-      .edu-school {
+      .loc .clock strong {
+        color: var(--text);
+        font-size: 1.35rem;
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* Now */
+      .now {
+        grid-area: now;
+      }
+
+      .now .card-label {
+        color: var(--accent);
+      }
+
+      .now ul {
+        list-style: none;
+        display: grid;
+        gap: 0.85rem;
+      }
+
+      .now li {
+        display: flex;
+        gap: 0.75rem;
+        align-items: flex-start;
+        font-size: 0.98rem;
+      }
+
+      .now li .i {
+        margin-top: 0.3rem;
+        color: var(--accent2);
+      }
+
+      html[dir="rtl"] .now li .i {
+        margin-top: 0.45rem;
+      }
+
+      /* Experience */
+      .exp {
+        grid-area: exp;
+      }
+
+      .timeline {
+        list-style: none;
+        position: relative;
+      }
+
+      .timeline li {
+        position: relative;
+        padding-inline-start: 1.6rem;
+        padding-bottom: 1.6rem;
+      }
+
+      .timeline li:last-child {
+        padding-bottom: 0;
+      }
+
+      /* Rail */
+      .timeline li::before {
+        content: "";
+        position: absolute;
+        inset-inline-start: 4px;
+        top: 0.55rem;
+        bottom: -0.55rem;
+        width: 1px;
+        background: var(--border-strong);
+      }
+
+      .timeline li:last-child::before {
+        display: none;
+      }
+
+      /* Dot */
+      .timeline li::after {
+        content: "";
+        position: absolute;
+        inset-inline-start: 0;
+        top: 0.4rem;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--card);
+        border: 2px solid var(--muted);
+      }
+
+      .timeline li.current::after {
+        border-color: var(--accent);
+        background: var(--accent);
+        box-shadow: 0 0 0 4px rgba(var(--accent-rgb), 0.15);
+      }
+
+      .t-date {
+        font-size: 0.78rem;
+        color: var(--muted);
+        letter-spacing: 0.03em;
+      }
+
+      .t-role {
         font-family: var(--font-display);
         font-size: 1.05rem;
         font-weight: 700;
-        margin-bottom: 0.25rem;
+        margin-top: 0.15rem;
+      }
+
+      .t-company {
+        font-size: 0.88rem;
+        color: var(--accent);
+        font-weight: 500;
+      }
+
+      .t-desc {
+        margin-top: 0.4rem;
+        font-size: 0.88rem;
+        color: var(--text-2);
+        font-weight: 300;
+      }
+
+      html[dir="rtl"] .t-desc {
+        font-weight: 400;
+      }
+
+      .badge {
+        display: inline-block;
+        margin-inline-start: 0.4rem;
+        padding: 0.1rem 0.55rem;
+        border-radius: 100px;
+        font-family: var(--font-body);
+        font-size: 0.68rem;
+        font-weight: 500;
+        vertical-align: middle;
+        color: var(--accent);
+        background: rgba(var(--accent-rgb), 0.1);
+        border: 1px solid rgba(var(--accent-rgb), 0.22);
+      }
+
+      /* Stack */
+      .stack {
+        grid-area: stack;
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.45rem 0.9rem;
+        border-radius: 100px;
+        border: 1px solid var(--border-strong);
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--text-2);
+        transition:
+          border-color 0.2s ease,
+          color 0.2s ease;
+      }
+
+      .chip::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--dot, var(--muted));
+      }
+
+      .chip:hover {
+        border-color: var(--accent);
+        color: var(--text);
+      }
+
+      .chip.core {
+        color: var(--text);
+      }
+
+      /* Education */
+      .edu {
+        grid-area: edu;
+      }
+
+      .edu-list {
+        list-style: none;
+        display: grid;
+        gap: 1rem;
+      }
+
+      .edu-list li {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .edu-list li:last-child {
+        padding-bottom: 0;
+        border-bottom: 0;
+      }
+
+      .edu-school {
+        font-weight: 600;
+        font-size: 0.95rem;
       }
 
       .edu-field {
-        font-size: 0.85rem;
+        font-size: 0.82rem;
         color: var(--muted);
       }
 
       .edu-year {
-        font-size: 0.8rem;
-        color: var(--muted);
-        margin-top: 1rem;
+        flex: none;
+        font-size: 0.78rem;
+        color: var(--accent2);
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
       }
 
       /* Contact */
-      .contact-section {
-        background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: 24px;
-        padding: 4rem;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-        margin-bottom: 6rem;
-      }
-
-      .contact-section::before {
-        content: "";
-        position: absolute;
-        inset: -1px;
-        border-radius: 24px;
-        background: linear-gradient(
-          135deg,
-          rgba(var(--accent-rgb), 0.2),
-          transparent,
-          rgba(var(--accent2-rgb), 0.2)
-        );
-        z-index: -1;
-      }
-
-      .contact-section h2 {
-        font-family: var(--font-display);
-        font-size: clamp(2rem, 4vw, 3rem);
-        font-weight: 800;
-        margin-bottom: 1rem;
-      }
-
-      .contact-section p {
-        color: var(--text-2);
-        max-width: 480px;
-        margin: 0 auto 2.5rem;
-      }
-
-      .contact-links {
+      .contact {
+        grid-area: contact;
         display: flex;
-        gap: 1rem;
-        justify-content: center;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
         flex-wrap: wrap;
+        padding: 2.25rem;
+        background:
+          radial-gradient(ellipse 60% 120% at 100% 100%, rgba(var(--accent2-rgb), 0.1), transparent 70%),
+          radial-gradient(ellipse 50% 120% at 0% 0%, rgba(var(--accent-rgb), 0.08), transparent 70%),
+          var(--card);
       }
 
-      /* Footer */
+      .contact h2 {
+        font-family: var(--font-display);
+        font-size: clamp(1.6rem, 3vw, 2.25rem);
+        font-weight: 800;
+        line-height: 1.15;
+        margin-bottom: 0.4rem;
+      }
+
+      .contact p {
+        color: var(--text-2);
+        max-width: 30rem;
+        font-weight: 300;
+      }
+
+      html[dir="rtl"] .contact p {
+        font-weight: 400;
+      }
+
+      .contact .links {
+        margin-top: 0;
+      }
+
       footer {
         text-align: center;
-        padding: 2rem 0;
+        padding: 2rem 0 0.5rem;
         color: var(--muted);
         font-size: 0.8rem;
-        border-top: 1px solid var(--border);
       }
 
-      /* Scroll reveal (only hides content when JS is running) */
-      .js .reveal {
+      /* Entrance */
+      .js .card {
         opacity: 0;
-        transform: translateY(30px);
-        transition:
-          opacity 0.7s ease,
-          transform 0.7s ease;
+        animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+        animation-delay: calc(var(--i, 0) * 70ms);
       }
 
-      .js .reveal.visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      @keyframes fadeUp {
+      @keyframes rise {
         from {
           opacity: 0;
-          transform: translateY(20px);
+          transform: translateY(14px);
         }
         to {
           opacity: 1;
-          transform: translateY(0);
+          transform: none;
         }
       }
 
@@ -708,26 +863,63 @@
         *::after {
           animation-duration: 0.01ms !important;
           animation-delay: 0s !important;
+          animation-iteration-count: 1 !important;
           transition-duration: 0.01ms !important;
         }
       }
 
-      /* Responsive */
-      @media (max-width: 640px) {
-        .container {
-          padding: 0 1rem;
+      /* Tablet */
+      @media (max-width: 960px) {
+        .bento {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          grid-template-areas:
+            "intro intro"
+            "loc   since"
+            "now   now"
+            "exp   exp"
+            "stack stack"
+            "edu   edu"
+            "contact contact";
         }
-        .exp-item {
-          grid-template-columns: 1fr;
-          gap: 0.5rem;
+      }
+
+      /* Phone */
+      @media (max-width: 560px) {
+        :root {
+          --gap: 12px;
+          --radius: 18px;
         }
-        .edu-grid {
-          grid-template-columns: 1fr;
+        .page {
+          padding: 1rem 1rem 1.5rem;
         }
-        .contact-section {
-          padding: 2.5rem 1.5rem;
+        .bento {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          grid-template-areas:
+            "intro intro"
+            "now   now"
+            "loc   since"
+            "exp   exp"
+            "stack stack"
+            "edu   edu"
+            "contact contact";
         }
-        .contact-section .btn {
+        .card,
+        .intro,
+        .contact {
+          padding: 1.4rem;
+        }
+        .loc,
+        .since {
+          padding: 1.2rem;
+        }
+        .loc .clock {
+          flex-wrap: wrap;
+          gap: 0 0.5rem;
+        }
+        .big {
+          font-size: 2rem;
+        }
+        .btn {
           max-width: 100%;
           overflow-wrap: anywhere;
         }
@@ -737,224 +929,230 @@
   <body>
     <div class="bg-mesh"></div>
 
-    <div class="toolbar">
-      <div class="lang-switch" role="group" aria-label="Language">
-        <button type="button" class="lang-btn" data-lang="en" lang="en" aria-label="English">
-          EN
-        </button>
-        <button type="button" class="lang-btn" data-lang="fa" lang="fa" aria-label="فارسی">
-          فا
-        </button>
-        <button type="button" class="lang-btn" data-lang="ar" lang="ar" aria-label="العربية">
-          ع
-        </button>
-      </div>
-      <button type="button" class="theme-btn" aria-label="Switch to light mode">
-        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="4" />
-          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
-        </svg>
-        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-        </svg>
-      </button>
-    </div>
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <symbol id="i-pin" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></symbol>
+      <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" /><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" /></symbol>
+      <symbol id="i-layers" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2" /><polyline points="2 17 12 22 22 17" /><polyline points="2 12 12 17 22 12" /></symbol>
+      <symbol id="i-book" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></symbol>
+      <symbol id="i-mail" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="7 7 17 7 17 17" /></symbol>
+      <symbol id="i-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6" /></symbol>
+      <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></symbol>
+    </svg>
 
-    <!-- HERO -->
-    <section class="hero">
-      <div class="container">
-        <div class="hero-tag" data-i18n="hero.tag">Available for opportunities</div>
-        <h1>
-          <span data-i18n="hero.name1">Mohammad Mahdi</span><br />
-          <span class="name-accent" data-i18n="hero.name2">Arab</span>
-        </h1>
-        <div class="hero-role" data-i18n="hero.role">
-          Software Engineer & Front-End Developer
+    <div class="page">
+      <header class="header">
+        <a class="monogram" href="#" aria-label="Mohammad Mahdi Arab">MA</a>
+        <div class="toolbar">
+          <div class="lang-switch" role="group" aria-label="Language">
+            <button type="button" class="lang-btn" data-lang="en" lang="en" aria-label="English">EN</button>
+            <button type="button" class="lang-btn" data-lang="fa" lang="fa" aria-label="فارسی">فا</button>
+            <button type="button" class="lang-btn" data-lang="ar" lang="ar" aria-label="العربية">ع</button>
+          </div>
+          <button type="button" class="theme-btn" aria-label="Switch to light mode">
+            <svg class="i icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+            </svg>
+            <svg class="i icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+          </button>
         </div>
-        <p class="hero-bio" data-i18n="hero.bio">
-          Frontend developer at an AI and data processing company, where I've
-          built two web applications — and designed the UI for the second one
-          myself. Previously led a frontend team. I work mainly with React,
-          TypeScript, and Next.js, and I'm currently pursuing an M.Sc. in
-          Software Engineering.
-        </p>
-        <div class="hero-links">
-          <a
-            href="https://www.linkedin.com/in/mohammad-mahdi-arab2002/"
-            class="btn btn-primary"
-            target="_blank"
-            rel="noopener"
-            data-i18n="btn.linkedin"
-          >
-            LinkedIn Profile
-          </a>
-          <a
-            href="https://github.com/The-Dark-Lord2002"
-            class="btn btn-ghost"
-            target="_blank"
-            rel="noopener"
-          >
-            GitHub
-          </a>
-          <a
-            href="mailto:math.mohammad.arab@gmail.com"
-            class="btn btn-ghost"
-            data-i18n="btn.email"
-          >
-            Email Me
-          </a>
-        </div>
-      </div>
-    </section>
+      </header>
 
-    <div class="container">
-      <div class="section-divider"></div>
+      <main class="bento">
+        <!-- INTRO -->
+        <section class="card intro" style="--i: 0">
+          <div>
+            <span class="status"><span class="pulse"></span><span data-i18n="hero.tag">Currently at Rayasadr AI</span></span>
+            <h1>
+              <span data-i18n="hero.name1">Mohammad Mahdi</span><br />
+              <span class="grad" data-i18n="hero.name2">Arab</span>
+            </h1>
+            <div class="intro-role" data-i18n="hero.role">Frontend Developer · AI &amp; Data Products</div>
+          </div>
+          <div>
+            <p class="intro-bio" data-i18n="hero.bio">
+              Frontend developer at an AI and data processing company, where I've
+              built two web applications. Previously led a frontend team. I work
+              mainly with React, TypeScript, and Next.js, and I'm currently
+              pursuing an M.Sc. in Software Engineering.
+            </p>
+            <div class="links">
+              <a href="https://www.linkedin.com/in/mohammad-mahdi-arab2002/" class="btn btn-primary" target="_blank" rel="noopener">
+                <span data-i18n="btn.linkedin">LinkedIn</span>
+                <svg class="i flip" aria-hidden="true"><use href="#i-arrow" /></svg>
+              </a>
+              <a href="https://github.com/The-Dark-Lord2002" class="btn" target="_blank" rel="noopener">
+                GitHub
+                <svg class="i flip" aria-hidden="true"><use href="#i-arrow" /></svg>
+              </a>
+              <a href="mailto:math.mohammad.arab@gmail.com" class="btn">
+                <svg class="i" aria-hidden="true"><use href="#i-mail" /></svg>
+                <span data-i18n="btn.email">Email</span>
+              </a>
+            </div>
+          </div>
+        </section>
 
-      <!-- SKILLS -->
-      <section class="reveal">
-        <div class="section-label" data-i18n="skills.label">Expertise</div>
-        <h2 class="section-title" data-i18n="skills.title">Skills & Technologies</h2>
-        <div class="skills-grid">
-          <div class="skill-chip">JavaScript</div>
-          <div class="skill-chip">TypeScript</div>
-          <div class="skill-chip">React</div>
-          <div class="skill-chip">HTML5</div>
-          <div class="skill-chip">CSS / SCSS</div>
-          <div class="skill-chip">Next.js</div>
-          <div class="skill-chip">Git</div>
-          <div class="skill-chip">REST APIs</div>
-          <div class="skill-chip">Figma</div>
-          <div class="skill-chip">Agile / Scrum</div>
-          <div class="skill-chip" data-i18n="skills.uiArch">UI Architecture</div>
-          <div class="skill-chip" data-i18n="skills.perf">Performance</div>
-        </div>
-      </section>
+        <!-- LOCATION -->
+        <section class="card loc" style="--i: 1">
+          <div class="card-label">
+            <svg class="i" aria-hidden="true"><use href="#i-pin" /></svg>
+            <span data-i18n="loc.label">Based in</span>
+          </div>
+          <div class="place" data-i18n="loc.place">Sari, Iran</div>
+          <div class="clock">
+            <strong id="clock" dir="ltr">--:--</strong>
+            <span data-i18n="loc.time">local time</span>
+          </div>
+        </section>
 
-      <div class="section-divider"></div>
+        <!-- SINCE -->
+        <section class="card since" style="--i: 2">
+          <div class="card-label">
+            <svg class="i" aria-hidden="true"><use href="#i-calendar" /></svg>
+            <span data-i18n="since.label">Since</span>
+          </div>
+          <div class="big grad" data-i18n="since.value">2022</div>
+          <div class="sub" data-i18n="since.text">Building for the web</div>
+        </section>
 
-      <!-- EXPERIENCE -->
-      <section class="reveal">
-        <div class="section-label" data-i18n="exp.label">Career</div>
-        <h2 class="section-title" data-i18n="exp.title">Experience</h2>
-        <div class="exp-list">
-          <div class="exp-item">
-            <div class="exp-date" data-i18n="exp1.date">Oct 2025 — Present</div>
-            <div>
-              <div class="exp-role">
+        <!-- NOW -->
+        <section class="card now" style="--i: 3">
+          <div class="card-label">
+            <span class="pulse"></span>
+            <span data-i18n="now.label">Now</span>
+          </div>
+          <ul>
+            <li>
+              <svg class="i flip" aria-hidden="true"><use href="#i-chevron" /></svg>
+              <span data-i18n="now.1">Building web applications at Rayasadr AI &amp; Data Processing</span>
+            </li>
+            <li>
+              <svg class="i flip" aria-hidden="true"><use href="#i-chevron" /></svg>
+              <span data-i18n="now.2">M.Sc. in Software Engineering at Shahrood University of Technology</span>
+            </li>
+          </ul>
+        </section>
+
+        <!-- EXPERIENCE -->
+        <section class="card exp" style="--i: 4">
+          <div class="card-label">
+            <svg class="i" aria-hidden="true"><use href="#i-briefcase" /></svg>
+            <span data-i18n="exp.title">Experience</span>
+          </div>
+          <ol class="timeline">
+            <li class="current">
+              <div class="t-date" data-i18n="exp1.date">Oct 2025 — Present</div>
+              <div class="t-role">
                 <span data-i18n="role.frontend">Frontend Developer</span>
-                <span class="exp-badge" data-i18n="exp.current">Current</span>
+                <span class="badge" data-i18n="exp.current">Current</span>
               </div>
-              <div class="exp-company" data-i18n="exp1.company">
-                Rayasadr AI & Data Processing Co. · Damghan, Iran
+              <div class="t-company" data-i18n="exp1.company">Rayasadr AI &amp; Data Processing Co.</div>
+              <div class="t-desc" data-i18n="exp1.desc">
+                Built two web applications for an AI-focused company, delivering
+                data-rich interfaces with modern web technologies.
               </div>
-              <div class="exp-desc" data-i18n="exp1.desc">
-                Built two web applications for an AI-focused company, and
-                handled the UI/UX design of the second one in addition to
-                implementing it.
+            </li>
+            <li>
+              <div class="t-date" data-i18n="exp2.date">Jan 2024 — Jul 2024</div>
+              <div class="t-role" data-i18n="exp2.role">Front-End Team Lead</div>
+              <div class="t-company" data-i18n="exp2.company">Hamsaye · Tehran</div>
+              <div class="t-desc" data-i18n="exp2.desc">
+                Led the front-end team: code reviews, technical decisions, team
+                coordination, and development standards.
               </div>
-            </div>
-          </div>
-
-          <div class="exp-item">
-            <div class="exp-date" data-i18n="exp2.date">Jan 2024 — Jul 2024</div>
-            <div>
-              <div class="exp-role" data-i18n="exp2.role">Front-End Team Lead</div>
-              <div class="exp-company" data-i18n="exp2.company">Hamsaye · Tehran, Iran</div>
-              <div class="exp-desc" data-i18n="exp2.desc">
-                Led a front-end team in building and shipping product features.
-                Responsible for code reviews, technical decisions, team
-                coordination, and setting development standards.
+            </li>
+            <li>
+              <div class="t-date" data-i18n="exp3.date">Sep 2023 — Jan 2024</div>
+              <div class="t-role" data-i18n="exp3.role">Teaching Assistant</div>
+              <div class="t-company" data-i18n="uni.damghan">Damghan University</div>
+            </li>
+            <li>
+              <div class="t-date" data-i18n="exp4.date">Jun 2022 — May 2023</div>
+              <div class="t-role" data-i18n="role.frontend">Frontend Developer</div>
+              <div class="t-company" data-i18n="exp4.company">Sepehr Academy · Sari</div>
+              <div class="t-desc" data-i18n="exp4.desc">
+                Turned design mockups into responsive, production-ready web
+                applications alongside design and backend teams.
               </div>
-            </div>
-          </div>
+            </li>
+          </ol>
+        </section>
 
-          <div class="exp-item">
-            <div class="exp-date" data-i18n="exp3.date">Sep 2023 — Jan 2024</div>
-            <div>
-              <div class="exp-role" data-i18n="exp3.role">Teaching Assistant</div>
-              <div class="exp-company" data-i18n="uni.damghan">Damghan University</div>
-              <div class="exp-desc" data-i18n="exp3.desc">
-                Supported students with coursework in computer engineering, held
-                review sessions, and provided mentorship on technical projects.
+        <!-- STACK -->
+        <section class="card stack" style="--i: 5">
+          <div class="card-label">
+            <svg class="i" aria-hidden="true"><use href="#i-layers" /></svg>
+            <span data-i18n="skills.title">Stack</span>
+          </div>
+          <div class="chips" dir="ltr">
+            <span class="chip core" style="--dot: #61dafb">React</span>
+            <span class="chip core" style="--dot: #3178c6">TypeScript</span>
+            <span class="chip core" style="--dot: var(--text)">Next.js</span>
+            <span class="chip" style="--dot: #f7df1e">JavaScript</span>
+            <span class="chip" style="--dot: #e34f26">HTML5</span>
+            <span class="chip" style="--dot: #cc6699">CSS / SCSS</span>
+            <span class="chip" style="--dot: var(--accent)">REST APIs</span>
+            <span class="chip" style="--dot: #f05032">Git</span>
+            <span class="chip" style="--dot: #a259ff">Figma</span>
+            <span class="chip" style="--dot: var(--accent2)">Agile / Scrum</span>
+          </div>
+        </section>
+
+        <!-- EDUCATION -->
+        <section class="card edu" style="--i: 6">
+          <div class="card-label">
+            <svg class="i" aria-hidden="true"><use href="#i-book" /></svg>
+            <span data-i18n="edu.title">Education</span>
+          </div>
+          <ul class="edu-list">
+            <li>
+              <div>
+                <div class="edu-school" data-i18n="uni.shahrood">Shahrood University of Technology</div>
+                <div class="edu-field" data-i18n="field.se">M.Sc. · Software Engineering</div>
               </div>
-            </div>
-          </div>
-
-          <div class="exp-item">
-            <div class="exp-date" data-i18n="exp4.date">Jun 2022 — May 2023</div>
-            <div>
-              <div class="exp-role" data-i18n="role.frontend">Frontend Developer</div>
-              <div class="exp-company" data-i18n="exp4.company">Sepehr Academy · Sari, Iran</div>
-              <div class="exp-desc" data-i18n="exp4.desc">
-                Developed responsive and interactive web applications,
-                translating design mockups into production-ready code.
-                Collaborated with design and backend teams.
+              <div class="edu-year" data-i18n="edu1.year">2025 — Now</div>
+            </li>
+            <li>
+              <div>
+                <div class="edu-school" data-i18n="uni.damghan">Damghan University</div>
+                <div class="edu-field" data-i18n="field.ce">B.E. · Computer Engineering</div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
+              <div class="edu-year" data-i18n="edu2.year">2020 — 2025</div>
+            </li>
+            <li>
+              <div>
+                <div class="edu-school" data-i18n="uni.mazandaran">University of Mazandaran</div>
+                <div class="edu-field" data-i18n="field.ce">B.E. · Computer Engineering</div>
+              </div>
+              <div class="edu-year" data-i18n="edu3.year">2022</div>
+            </li>
+          </ul>
+        </section>
 
-      <div class="section-divider"></div>
-
-      <!-- EDUCATION -->
-      <section class="reveal">
-        <div class="section-label" data-i18n="edu.label">Academic Background</div>
-        <h2 class="section-title" data-i18n="edu.title">Education</h2>
-        <div class="edu-grid">
-          <div class="edu-card">
-            <div class="edu-degree" data-i18n="deg.msc">Master's Degree</div>
-            <div class="edu-school" data-i18n="uni.shahrood">Shahrood University of Technology</div>
-            <div class="edu-field" data-i18n="field.se">Computer Software Engineering</div>
-            <div class="edu-year" data-i18n="edu1.year">2025 – Present</div>
+        <!-- CONTACT -->
+        <section class="card contact" style="--i: 7">
+          <div>
+            <h2 data-i18n="contact.title">Get in Touch</h2>
+            <p data-i18n="contact.text">
+              Always happy to talk about frontend development, side projects, or
+              ideas worth building.
+            </p>
           </div>
-          <div class="edu-card">
-            <div class="edu-degree" data-i18n="deg.bsc">Bachelor of Engineering</div>
-            <div class="edu-school" data-i18n="uni.damghan">Damghan University</div>
-            <div class="edu-field" data-i18n="field.ce">Computer Engineering</div>
-            <div class="edu-year" data-i18n="edu2.year">2020 – 2025</div>
+          <div class="links">
+            <a href="mailto:math.mohammad.arab@gmail.com" class="btn btn-primary" dir="ltr">
+              <svg class="i" aria-hidden="true"><use href="#i-mail" /></svg>
+              math.mohammad.arab@gmail.com
+            </a>
           </div>
-          <div class="edu-card">
-            <div class="edu-degree" data-i18n="deg.bsc">Bachelor of Engineering</div>
-            <div class="edu-school" data-i18n="uni.mazandaran">University of Mazandaran</div>
-            <div class="edu-field" data-i18n="field.ce">Computer Engineering</div>
-            <div class="edu-year" data-i18n="edu3.year">2022</div>
-          </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
-      <div class="section-divider"></div>
-
-      <!-- CONTACT -->
-      <section class="contact-section reveal">
-        <h2 data-i18n="contact.title">Let's Build Something Together</h2>
-        <p data-i18n="contact.text">
-          I'm open to exciting roles, collaborations, and startup opportunities.
-          Don't hesitate to reach out.
-        </p>
-        <div class="contact-links">
-          <a
-            href="mailto:math.mohammad.arab@gmail.com"
-            class="btn btn-primary"
-            dir="ltr"
-            >math.mohammad.arab@gmail.com</a
-          >
-          <a
-            href="https://github.com/The-Dark-Lord2002"
-            class="btn btn-ghost"
-            target="_blank"
-            rel="noopener"
-            >GitHub</a
-          >
-        </div>
-      </section>
+      <footer data-i18n="footer">© 2026 Mohammad Mahdi Arab · Software Engineer</footer>
     </div>
-
-    <footer>
-      <div class="container" data-i18n="footer">
-        © 2026 Mohammad Mahdi Arab · Software Engineer
-      </div>
-    </footer>
 
     <script>
       // Translations. English is read from the HTML itself.
@@ -974,54 +1172,54 @@
           "theme.toLight": "تغییر به حالت روز",
           "theme.toDark": "تغییر به حالت شب",
           "lang.group": "زبان",
-          "hero.tag": "آماده‌ی همکاری",
+          "hero.tag": "در حال حاضر در رایاصدر",
           "hero.name1": "محمدمهدی",
           "hero.name2": "عرب",
-          "hero.role": "مهندس نرم‌افزار و توسعه‌دهنده‌ی فرانت‌اند",
+          "hero.role": "توسعه‌دهنده‌ی فرانت‌اند · محصولات هوش مصنوعی و داده",
           "hero.bio":
-            "توسعه‌دهنده‌ی فرانت‌اند در یک شرکت هوش مصنوعی و پردازش داده، جایی که دو اپلیکیشن وب پیاده‌سازی کرده‌ام و طراحی رابط کاربری دومی را هم خودم انجام داده‌ام. پیش‌تر سرپرستی یک تیم فرانت‌اند را بر عهده داشتم. بیشتر با React، TypeScript و Next.js کار می‌کنم و در حال حاضر دانشجوی کارشناسی ارشد مهندسی نرم‌افزار هستم.",
-          "btn.linkedin": "پروفایل لینکدین",
-          "btn.email": "ایمیل بزنید",
-          "skills.label": "تخصص",
-          "skills.title": "مهارت‌ها و فناوری‌ها",
-          "skills.uiArch": "معماری رابط کاربری",
-          "skills.perf": "بهینه‌سازی عملکرد",
-          "exp.label": "مسیر حرفه‌ای",
+            "توسعه‌دهنده‌ی فرانت‌اند در یک شرکت هوش مصنوعی و پردازش داده، جایی که دو اپلیکیشن وب پیاده‌سازی کرده‌ام. پیش‌تر سرپرستی یک تیم فرانت‌اند را بر عهده داشتم. بیشتر با React، TypeScript و Next.js کار می‌کنم و در حال حاضر دانشجوی کارشناسی ارشد مهندسی نرم‌افزار هستم.",
+          "btn.linkedin": "لینکدین",
+          "btn.email": "ایمیل",
+          "loc.label": "محل زندگی",
+          "loc.place": "ساری، ایران",
+          "loc.time": "به وقت محلی",
+          "since.label": "از سال",
+          "since.value": "۲۰۲۲",
+          "since.text": "در حال ساختن برای وب",
+          "now.label": "این روزها",
+          "now.1": "ساخت اپلیکیشن‌های وب در شرکت هوش مصنوعی و پردازش داده رایاصدر",
+          "now.2": "کارشناسی ارشد مهندسی نرم‌افزار در دانشگاه صنعتی شاهرود",
           "exp.title": "سوابق کاری",
           "exp.current": "فعلی",
           "role.frontend": "توسعه‌دهنده‌ی فرانت‌اند",
           "exp1.date": "اکتبر ۲۰۲۵ — اکنون",
-          "exp1.company": "شرکت هوش مصنوعی و پردازش داده رایاصدر · دامغان",
+          "exp1.company": "شرکت هوش مصنوعی و پردازش داده رایاصدر",
           "exp1.desc":
-            "پیاده‌سازی دو اپلیکیشن وب برای یک شرکت فعال در حوزه‌ی هوش مصنوعی؛ در پروژه‌ی دوم، علاوه بر پیاده‌سازی، طراحی رابط و تجربه‌ی کاربری را هم انجام دادم.",
+            "پیاده‌سازی دو اپلیکیشن وب برای یک شرکت فعال در حوزه‌ی هوش مصنوعی، با رابط‌های کاربری مبتنی بر داده و فناوری‌های مدرن وب.",
           "exp2.date": "ژانویه ۲۰۲۴ — ژوئیه ۲۰۲۴",
           "exp2.role": "سرپرست تیم فرانت‌اند",
           "exp2.company": "همسایه · تهران",
           "exp2.desc":
-            "سرپرستی تیم فرانت‌اند در توسعه و انتشار قابلیت‌های محصول؛ مسئول بازبینی کد، تصمیم‌های فنی، هماهنگی تیم و تعیین استانداردهای توسعه.",
+            "سرپرستی تیم فرانت‌اند: بازبینی کد، تصمیم‌های فنی، هماهنگی تیم و تعیین استانداردهای توسعه.",
           "exp3.date": "سپتامبر ۲۰۲۳ — ژانویه ۲۰۲۴",
           "exp3.role": "دستیار آموزشی",
-          "exp3.desc":
-            "پشتیبانی از دانشجویان در دروس مهندسی کامپیوتر، برگزاری جلسات رفع اشکال و راهنمایی در پروژه‌های فنی.",
           "exp4.date": "ژوئن ۲۰۲۲ — مه ۲۰۲۳",
           "exp4.company": "آکادمی سپهر · ساری",
           "exp4.desc":
-            "توسعه‌ی اپلیکیشن‌های وب واکنش‌گرا و تعاملی و تبدیل طرح‌های گرافیکی به کد آماده‌ی انتشار، با همکاری تیم‌های طراحی و بک‌اند.",
-          "edu.label": "سوابق تحصیلی",
+            "تبدیل طرح‌های گرافیکی به اپلیکیشن‌های وب واکنش‌گرا و آماده‌ی انتشار، در همکاری با تیم‌های طراحی و بک‌اند.",
+          "skills.title": "ابزارها و فناوری‌ها",
           "edu.title": "تحصیلات",
-          "deg.msc": "کارشناسی ارشد",
-          "deg.bsc": "کارشناسی",
           "uni.shahrood": "دانشگاه صنعتی شاهرود",
           "uni.damghan": "دانشگاه دامغان",
           "uni.mazandaran": "دانشگاه مازندران",
-          "field.se": "مهندسی کامپیوتر - نرم‌افزار",
-          "field.ce": "مهندسی کامپیوتر",
+          "field.se": "کارشناسی ارشد · مهندسی نرم‌افزار",
+          "field.ce": "کارشناسی · مهندسی کامپیوتر",
           "edu1.year": "۲۰۲۵ — اکنون",
           "edu2.year": "۲۰۲۰ — ۲۰۲۵",
           "edu3.year": "۲۰۲۲",
-          "contact.title": "بیایید با هم چیزی بسازیم",
+          "contact.title": "در تماس باشیم",
           "contact.text":
-            "برای موقعیت‌های شغلی، همکاری و فرصت‌های استارتاپی آماده‌ام. خوشحال می‌شوم پیام بدهید.",
+            "همیشه از گفت‌وگو درباره‌ی توسعه‌ی فرانت‌اند، پروژه‌های جانبی و ایده‌هایی که ارزش ساختن دارند استقبال می‌کنم.",
           footer: "© ۲۰۲۶ محمدمهدی عرب · مهندس نرم‌افزار",
         },
         ar: {
@@ -1031,58 +1229,59 @@
           "theme.toLight": "التبديل إلى الوضع النهاري",
           "theme.toDark": "التبديل إلى الوضع الليلي",
           "lang.group": "اللغة",
-          "hero.tag": "متاح لفرص عمل جديدة",
+          "hero.tag": "حاليًا في رايا صدر",
           "hero.name1": "محمد مهدي",
           "hero.name2": "عرب",
-          "hero.role": "مهندس برمجيات ومطوّر واجهات أمامية",
+          "hero.role": "مطوّر واجهات أمامية · منتجات الذكاء الاصطناعي والبيانات",
           "hero.bio":
-            "مطوّر واجهات أمامية في شركة للذكاء الاصطناعي ومعالجة البيانات، حيث بنيتُ تطبيقَي ويب وتولّيت بنفسي تصميم واجهة المستخدم للتطبيق الثاني. قُدتُ سابقًا فريقًا لتطوير الواجهات الأمامية. أعمل أساسًا باستخدام React وTypeScript وNext.js، وأدرس حاليًا الماجستير في هندسة البرمجيات.",
-          "btn.linkedin": "الملف الشخصي على LinkedIn",
-          "btn.email": "راسلني",
-          "skills.label": "الخبرات",
-          "skills.title": "المهارات والتقنيات",
-          "skills.uiArch": "هندسة واجهات المستخدم",
-          "skills.perf": "تحسين الأداء",
-          "exp.label": "المسيرة المهنية",
+            "مطوّر واجهات أمامية في شركة للذكاء الاصطناعي ومعالجة البيانات، حيث بنيتُ تطبيقَي ويب. قُدتُ سابقًا فريقًا لتطوير الواجهات الأمامية. أعمل أساسًا باستخدام React وTypeScript وNext.js، وأدرس حاليًا الماجستير في هندسة البرمجيات.",
+          "btn.linkedin": "LinkedIn",
+          "btn.email": "البريد",
+          "loc.label": "مقيم في",
+          "loc.place": "ساري، إيران",
+          "loc.time": "بالتوقيت المحلي",
+          "since.label": "منذ",
+          "since.value": "2022",
+          "since.text": "أبني للويب",
+          "now.label": "حاليًا",
+          "now.1": "بناء تطبيقات الويب في شركة رايا صدر للذكاء الاصطناعي ومعالجة البيانات",
+          "now.2": "ماجستير في هندسة البرمجيات بجامعة شاهرود للتكنولوجيا",
           "exp.title": "الخبرة العملية",
           "exp.current": "حاليًا",
           "role.frontend": "مطوّر واجهات أمامية",
           "exp1.date": "أكتوبر 2025 — حتى الآن",
-          "exp1.company":
-            "شركة رايا صدر للذكاء الاصطناعي ومعالجة البيانات · دامغان، إيران",
+          "exp1.company": "شركة رايا صدر للذكاء الاصطناعي ومعالجة البيانات",
           "exp1.desc":
-            "بناء تطبيقَي ويب لشركة متخصصة في الذكاء الاصطناعي، مع تولّي تصميم واجهة وتجربة المستخدم للتطبيق الثاني إلى جانب تطويره.",
+            "بناء تطبيقَي ويب لشركة متخصصة في الذكاء الاصطناعي، بواجهات غنية بالبيانات وتقنيات ويب حديثة.",
           "exp2.date": "يناير 2024 — يوليو 2024",
           "exp2.role": "قائد فريق الواجهات الأمامية",
-          "exp2.company": "همسايه · طهران، إيران",
+          "exp2.company": "همسايه · طهران",
           "exp2.desc":
-            "قيادة فريق الواجهات الأمامية في بناء ميزات المنتج وإطلاقها، مع مسؤولية مراجعة الشيفرة واتخاذ القرارات التقنية وتنسيق عمل الفريق ووضع معايير التطوير.",
+            "قيادة فريق الواجهات الأمامية: مراجعة الشيفرة، والقرارات التقنية، وتنسيق الفريق، ووضع معايير التطوير.",
           "exp3.date": "سبتمبر 2023 — يناير 2024",
           "exp3.role": "مساعد تدريس",
-          "exp3.desc":
-            "دعم الطلاب في مقررات هندسة الحاسوب، وعقد جلسات مراجعة، وتقديم الإرشاد في المشاريع التقنية.",
           "exp4.date": "يونيو 2022 — مايو 2023",
-          "exp4.company": "أكاديمية سبهر · ساري، إيران",
+          "exp4.company": "أكاديمية سبهر · ساري",
           "exp4.desc":
-            "تطوير تطبيقات ويب متجاوبة وتفاعلية، وتحويل التصاميم إلى شيفرة جاهزة للإنتاج بالتعاون مع فريقَي التصميم والواجهات الخلفية.",
-          "edu.label": "الخلفية الأكاديمية",
+            "تحويل التصاميم إلى تطبيقات ويب متجاوبة وجاهزة للإنتاج بالتعاون مع فريقَي التصميم والواجهات الخلفية.",
+          "skills.title": "التقنيات",
           "edu.title": "التعليم",
-          "deg.msc": "ماجستير",
-          "deg.bsc": "بكالوريوس هندسة",
           "uni.shahrood": "جامعة شاهرود للتكنولوجيا",
           "uni.damghan": "جامعة دامغان",
           "uni.mazandaran": "جامعة مازندران",
-          "field.se": "هندسة البرمجيات",
-          "field.ce": "هندسة الحاسوب",
+          "field.se": "ماجستير · هندسة البرمجيات",
+          "field.ce": "بكالوريوس · هندسة الحاسوب",
           "edu1.year": "2025 — حتى الآن",
           "edu2.year": "2020 — 2025",
           "edu3.year": "2022",
-          "contact.title": "لنبنِ شيئًا معًا",
+          "contact.title": "تواصل معي",
           "contact.text":
-            "أنا منفتح على الفرص الوظيفية والتعاون وفرص الشركات الناشئة. لا تتردد في التواصل معي.",
+            "يسعدني دائمًا الحديث عن تطوير الواجهات الأمامية والمشاريع الجانبية والأفكار التي تستحق البناء.",
           footer: "© 2026 محمد مهدي عرب · مهندس برمجيات",
         },
       };
+
+      const LOCALES = { en: "en-GB", fa: "fa-IR", ar: "ar-u-nu-latn" };
 
       const root = document.documentElement;
       const metaDesc = document.querySelector('meta[name="description"]');
@@ -1090,12 +1289,13 @@
       const themeBtn = document.querySelector(".theme-btn");
       const langGroup = document.querySelector(".lang-switch");
       const langBtns = document.querySelectorAll(".lang-btn");
+      const clock = document.getElementById("clock");
       const i18nNodes = document.querySelectorAll("[data-i18n]");
 
       // Fill in the English strings from the markup.
       i18nNodes.forEach((node) => {
         const key = node.dataset.i18n;
-        if (!(key in I18N.en)) I18N.en[key] = node.textContent.trim();
+        if (!(key in I18N.en)) I18N.en[key] = node.textContent.trim().replace(/\s+/g, " ");
       });
 
       function store(key, value) {
@@ -1108,11 +1308,20 @@
         return I18N[root.lang][key] ?? I18N.en[key];
       }
 
+      function updateClock() {
+        clock.textContent = new Intl.DateTimeFormat(LOCALES[root.lang], {
+          timeZone: "Asia/Tehran",
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        }).format(new Date());
+      }
+
       function updateThemeButton() {
         const isDark = root.dataset.theme === "dark";
         themeBtn.setAttribute("aria-label", t(isDark ? "theme.toLight" : "theme.toDark"));
         themeBtn.title = themeBtn.getAttribute("aria-label");
-        metaTheme.content = isDark ? "#0a0a0f" : "#f7f8fb";
+        metaTheme.content = isDark ? "#0a0a0f" : "#f4f5f9";
       }
 
       function setLang(lang, persist) {
@@ -1128,6 +1337,7 @@
           btn.setAttribute("aria-pressed", String(btn.dataset.lang === lang));
         });
         updateThemeButton();
+        updateClock();
         if (persist) {
           store("lang", lang);
           try {
@@ -1159,21 +1369,17 @@
         updateThemeButton();
       });
 
-      setLang(root.lang, false);
+      // Cursor spotlight on cards
+      document.querySelectorAll(".card").forEach((card) => {
+        card.addEventListener("pointermove", (e) => {
+          const r = card.getBoundingClientRect();
+          card.style.setProperty("--mx", `${e.clientX - r.left}px`);
+          card.style.setProperty("--my", `${e.clientY - r.top}px`);
+        });
+      });
 
-      // Scroll reveal
-      const reveals = document.querySelectorAll(".reveal");
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("visible");
-            }
-          });
-        },
-        { threshold: 0.1 },
-      );
-      reveals.forEach((el) => observer.observe(el));
+      setLang(root.lang, false);
+      setInterval(updateClock, 15000);
     </script>
   </body>
 </html>
